@@ -23,7 +23,6 @@ import '../../../../../../resources/resources.dart';
 import '../../../../../../utils/syncfusion_data_grid/sample_model.dart';
 import '../../../../../../utils/text_size.dart';
 
-
 /// Set order's data collection to data grid source.
 class BookinsgDataGridSource extends DataGridSource {
   /// Creates the order data source class with required details.
@@ -49,12 +48,15 @@ class BookinsgDataGridSource extends DataGridSource {
   /// Building DataGridRows
   void buildDataGridRows(BookingsVm vm) {
     if (vm.selectedIndex == 0) {
-      dataGridRows = tickets.toList()
+      dataGridRows = tickets
+          .where((element) => element.isPending! == false)
+          .toList()
           .map<DataGridRow>((BookingsModel model) {
         return DataGridRow(cells: <DataGridCell>[
           DataGridCell<BookingsModel>(columnName: 'sr_no', value: model),
           DataGridCell<BookingsModel>(columnName: 'booked_by', value: model),
-          DataGridCell<BookingsModel>(columnName: 'charter_owner', value: model),
+          DataGridCell<BookingsModel>(
+              columnName: 'charter_owner', value: model),
           DataGridCell<BookingsModel>(columnName: 'info', value: model),
           DataGridCell<BookingsModel>(columnName: 'created_at', value: model),
           DataGridCell<BookingsModel>(columnName: 'status', value: model),
@@ -63,13 +65,18 @@ class BookinsgDataGridSource extends DataGridSource {
       }).toList();
     } else {
       dataGridRows = tickets
-          .where((element) => element.bookingStatus == GlobalFunctions.getBookingStatus(selectedIndex: vm.selectedIndex))
+          .where((element) =>
+              element.bookingStatus ==
+                  GlobalFunctions.getBookingStatus(
+                      selectedIndex: vm.selectedIndex) &&
+              element.isPending! == false)
           .toList()
           .map<DataGridRow>((BookingsModel model) {
         return DataGridRow(cells: <DataGridCell>[
           DataGridCell<BookingsModel>(columnName: 'sr_no', value: model),
           DataGridCell<BookingsModel>(columnName: 'booked_by', value: model),
-          DataGridCell<BookingsModel>(columnName: 'charter_owner', value: model),
+          DataGridCell<BookingsModel>(
+              columnName: 'charter_owner', value: model),
           DataGridCell<BookingsModel>(columnName: 'info', value: model),
           DataGridCell<BookingsModel>(columnName: 'created_at', value: model),
           DataGridCell<BookingsModel>(columnName: 'status', value: model),
@@ -102,8 +109,9 @@ class BookinsgDataGridSource extends DataGridSource {
             "${rowIndex + 1}",
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style:
-                R.textStyles.poppins(fs: AdaptiveTextSize.getAdaptiveTextSize(Get.context!, 12), fw: FontWeight.w500),
+            style: R.textStyles.poppins(
+                fs: AdaptiveTextSize.getAdaptiveTextSize(Get.context!, 12),
+                fw: FontWeight.w500),
           ),
         ),
 
@@ -112,7 +120,12 @@ class BookinsgDataGridSource extends DataGridSource {
           padding: const EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
-            Provider.of<UserVM>(Get.context!,listen: false).userList.firstWhereOrNull((element) => element.uid==model.createdBy)?.firstName??"",
+            Provider.of<UserVM>(Get.context!, listen: false)
+                    .userList
+                    .firstWhereOrNull(
+                        (element) => element.uid == model.createdBy)
+                    ?.firstName ??
+                "",
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: R.textStyles.poppins(
@@ -127,7 +140,12 @@ class BookinsgDataGridSource extends DataGridSource {
           padding: const EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
-          Provider.of<UserVM>(Get.context!,listen: false).userList.firstWhereOrNull((element) => element.uid==model.hostUserUid)?.firstName??"",
+            Provider.of<UserVM>(Get.context!, listen: false)
+                    .userList
+                    .firstWhereOrNull(
+                        (element) => element.uid == model.hostUserUid)
+                    ?.firstName ??
+                "",
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: R.textStyles.poppins(
@@ -153,7 +171,6 @@ class BookinsgDataGridSource extends DataGridSource {
             ),
           ),
         ),
-
 
         // /// Total Friends
         // Container(
@@ -189,8 +206,9 @@ class BookinsgDataGridSource extends DataGridSource {
             GlobalFunctions.getDateTime(model.createdAt?.toDate() ?? now),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style:
-                R.textStyles.poppins(fs: AdaptiveTextSize.getAdaptiveTextSize(Get.context!, 12), fw: FontWeight.w500),
+            style: R.textStyles.poppins(
+                fs: AdaptiveTextSize.getAdaptiveTextSize(Get.context!, 12),
+                fw: FontWeight.w500),
           ),
         ),
 
@@ -202,19 +220,21 @@ class BookinsgDataGridSource extends DataGridSource {
             padding: EdgeInsets.symmetric(horizontal: 2.sp, vertical: 1.sp),
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color:
-              model.bookingStatus == BookingStatus.completed.index ? R.colors.greenButton :
-              model.bookingStatus == BookingStatus.ongoing.index ? R.colors.yellowDark :
-              R.colors.pinkRed,
+              color: model.bookingStatus == BookingStatus.completed.index
+                  ? R.colors.greenButton
+                  : model.bookingStatus == BookingStatus.ongoing.index
+                      ? R.colors.yellowDark
+                      : R.colors.pinkRed,
               borderRadius: BorderRadius.circular(6),
             ),
             child: Text(
               model.bookingStatus == BookingStatus.completed.index
-                  ? LocalizationMap.getTranslatedValues("completed") :
-              model.bookingStatus == BookingStatus.ongoing.index
-                  ? LocalizationMap.getTranslatedValues("ongoing") :
-              LocalizationMap.getTranslatedValues("cancelled"),
-              style: R.textStyles.poppins(fs: AdaptiveTextSize.getAdaptiveTextSize(Get.context!, 11)),
+                  ? LocalizationMap.getTranslatedValues("completed")
+                  : model.bookingStatus == BookingStatus.ongoing.index
+                      ? LocalizationMap.getTranslatedValues("ongoing")
+                      : LocalizationMap.getTranslatedValues("cancelled"),
+              style: R.textStyles.poppins(
+                  fs: AdaptiveTextSize.getAdaptiveTextSize(Get.context!, 11)),
             ),
           ),
         ),
@@ -265,8 +285,7 @@ class BookinsgDataGridSource extends DataGridSource {
         //   }
         // ),
       ]);
-    }
-    else {
+    } else {
       Widget buildWidget({
         AlignmentGeometry alignment = Alignment.center,
         EdgeInsetsGeometry padding = const EdgeInsets.all(8.0),
@@ -286,8 +305,10 @@ class BookinsgDataGridSource extends DataGridSource {
       return DataGridRowAdapter(
           color: backgroundColor,
           cells: row.getCells().map<Widget>((DataGridCell dataCell) {
-            if (dataCell.columnName == 'id' || dataCell.columnName == 'UserId') {
-              return buildWidget(alignment: Alignment.centerRight, value: dataCell.value!);
+            if (dataCell.columnName == 'id' ||
+                dataCell.columnName == 'UserId') {
+              return buildWidget(
+                  alignment: Alignment.centerRight, value: dataCell.value!);
             } else {
               return buildWidget(value: dataCell.value!);
             }
@@ -314,8 +335,11 @@ class BookinsgDataGridSource extends DataGridSource {
   }
 
   @override
-  Widget? buildTableSummaryCellWidget(GridTableSummaryRow summaryRow, GridSummaryColumn? summaryColumn,
-      RowColumnIndex rowColumnIndex, String summaryValue) {
+  Widget? buildTableSummaryCellWidget(
+      GridTableSummaryRow summaryRow,
+      GridSummaryColumn? summaryColumn,
+      RowColumnIndex rowColumnIndex,
+      String summaryValue) {
     Widget buildCell(String value, EdgeInsets padding, Alignment alignment) {
       return Container(
         padding: padding,
@@ -329,7 +353,8 @@ class BookinsgDataGridSource extends DataGridSource {
     }
 
     if (summaryRow.showSummaryInRow) {
-      return buildCell(summaryValue, const EdgeInsets.all(16.0), Alignment.centerLeft);
+      return buildCell(
+          summaryValue, const EdgeInsets.all(16.0), Alignment.centerLeft);
     } else if (summaryValue.isNotEmpty) {
       if (summaryColumn!.columnName == 'freight') {
         summaryValue = double.parse(summaryValue).toStringAsFixed(2);
@@ -338,7 +363,8 @@ class BookinsgDataGridSource extends DataGridSource {
       summaryValue =
           'Sum: ${NumberFormat.currency(locale: 'en_US', decimalDigits: 0, symbol: r'$').format(double.parse(summaryValue))}';
 
-      return buildCell(summaryValue, const EdgeInsets.all(8.0), Alignment.centerRight);
+      return buildCell(
+          summaryValue, const EdgeInsets.all(8.0), Alignment.centerRight);
     }
     return null;
   }
@@ -354,5 +380,4 @@ class BookinsgDataGridSource extends DataGridSource {
       debugPrintStack();
     }
   }
-
 }

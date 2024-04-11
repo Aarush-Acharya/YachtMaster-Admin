@@ -24,8 +24,10 @@ class AuthVM extends ChangeNotifier {
 
   Future<void> fetchUser() async {
     try {
-      userData=UserModel();
-      DocumentSnapshot snapshot = await FBCollections.users.doc(FirebaseAuth.instance.currentUser?.uid??"").get();
+      userData = UserModel();
+      DocumentSnapshot snapshot = await FBCollections.users
+          .doc(FirebaseAuth.instance.currentUser?.uid ?? "")
+          .get();
       userData = UserModel.fromJson(snapshot.data());
       notifyListeners();
     } catch (e) {
@@ -33,13 +35,13 @@ class AuthVM extends ChangeNotifier {
     }
   }
 
-
   Future<void> signIn(String email, String pass) async {
     try {
       ZBotToast.loadingShow();
       User? user = await _auth.signInWithEmailPassword(email, pass);
       if (user != null) {
-        if (email.toLowerCase() == "admin@yachtmaster.com") {
+        if (email.toLowerCase() == "yachtmasterapp@gmail.com" &&
+            pass == "YachtMaster\$") {
           Get.offAllNamed(DashboardView.route);
         } else {
           _auth.signOut();
@@ -80,7 +82,6 @@ class AuthVM extends ChangeNotifier {
         Get.context!.read<BaseVm>().selectedIndex = 0;
         Get.context!.read<BaseVm>().pageController.jumpToPage(0);
         return Get.offAllNamed(AuthView.route);
-
       });
       ZBotToast.loadingClose();
     } catch (e) {

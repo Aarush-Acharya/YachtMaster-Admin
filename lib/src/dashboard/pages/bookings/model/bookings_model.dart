@@ -14,21 +14,30 @@ class BookingsModel {
     this.createdBy,
     this.hostUserUid,
     this.priceDetaill,
+    this.isPending,
   });
 
   BookingsModel.fromJson(dynamic json) {
     totalGuest = json['total_guest'];
-    charterFleetDetail =
-    json['charter_fleet_detail'] != null ? CharterFleetDetail.fromJson(json['charter_fleet_detail']) : null;
-    paymentDetail = json['payment_detail'] != null ? PaymentDetail.fromJson(json['payment_detail']) : null;
-    schedule = json['schedule '] != null ? BookingScheduleModel.fromJson(json['schedule ']) : null;
+    charterFleetDetail = json['charter_fleet_detail'] != null
+        ? CharterFleetDetail.fromJson(json['charter_fleet_detail'])
+        : null;
+    paymentDetail = json['payment_detail'] != null
+        ? PaymentDetail.fromJson(json['payment_detail'])
+        : null;
+    schedule = json['schedule '] != null
+        ? BookingScheduleModel.fromJson(json['schedule '])
+        : null;
     durationType = json['duration_type'];
     createdAt = json['created_at'];
     bookingStatus = json['booking_status'];
     id = json['id'];
     createdBy = json['created_by'];
     hostUserUid = json['host_user_uid'];
-    priceDetaill = json['price_detaill'] != null ? PriceDetaill.fromJson(json['price_detaill']) : null;
+    priceDetaill = json['price_detaill'] != null
+        ? PriceDetaill.fromJson(json['price_detaill'])
+        : null;
+    isPending = json['isPending'];
   }
   int? totalGuest;
   CharterFleetDetail? charterFleetDetail;
@@ -41,6 +50,7 @@ class BookingsModel {
   String? createdBy;
   String? hostUserUid;
   PriceDetaill? priceDetaill;
+  bool? isPending;
   BookingsModel copyWith({
     int? totalGuest,
     CharterFleetDetail? charterFleetDetail,
@@ -53,6 +63,7 @@ class BookingsModel {
     String? createdBy,
     String? hostUserUid,
     PriceDetaill? priceDetaill,
+    bool? isPending,
   }) =>
       BookingsModel(
         totalGuest: totalGuest ?? this.totalGuest,
@@ -66,6 +77,7 @@ class BookingsModel {
         createdBy: createdBy ?? this.createdBy,
         hostUserUid: hostUserUid ?? this.hostUserUid,
         priceDetaill: priceDetaill ?? this.priceDetaill,
+        isPending: isPending ?? this.isPending,
       );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -88,6 +100,7 @@ class BookingsModel {
     if (priceDetaill != null) {
       map['price_detaill'] = priceDetaill?.toJson();
     }
+    map['isPending'] = isPending;
     return map;
   }
 }
@@ -175,18 +188,18 @@ class BookingScheduleModel {
 class PaymentDetail {
   PaymentDetail(
       {this.paymentType,
-        this.payInType,
-        this.paymentStatus,
-        this.remainingAmount,
-        this.isSplit,
-        this.paidAmount,
-        this.payWithWallet = 0.0,
-        this.splitPayment,
-        this.paymentIntents,
-        this.paymentMethod,
-        this.cryptoScreenShot,
-        this.currentUserCardNum,
-        this.cryptoReceiverEmail});
+      this.payInType,
+      this.paymentStatus,
+      this.remainingAmount,
+      this.isSplit,
+      this.paidAmount,
+      this.payWithWallet = 0.0,
+      this.splitPayment,
+      this.paymentIntents,
+      this.paymentMethod,
+      this.cryptoScreenShot,
+      this.currentUserCardNum,
+      this.cryptoReceiverEmail});
 
   PaymentDetail.fromJson(dynamic json) {
     paymentType = json['payment_type'];
@@ -283,18 +296,18 @@ class PaymentDetail {
 class SplitPaymentModel {
   SplitPaymentModel(
       {this.remainingDeposit,
-        this.paymentType,
-        this.amount,
-        this.percentage,
-        this.remainingAmount,
-        this.paymentStatus,
-        this.depositStatus,
-        this.payWithWallet = 0.0,
-        this.userUid,
-        this.paymentMethod,
-        this.cryptoScreenShot,
-        this.currentUserCardNum,
-        this.cryptoReceiverEmail});
+      this.paymentType,
+      this.amount,
+      this.percentage,
+      this.remainingAmount,
+      this.paymentStatus,
+      this.depositStatus,
+      this.payWithWallet = 0.0,
+      this.userUid,
+      this.paymentMethod,
+      this.cryptoScreenShot,
+      this.currentUserCardNum,
+      this.cryptoReceiverEmail});
 
   SplitPaymentModel.fromJson(dynamic json) {
     remainingDeposit = json['remaining_deposit'];
@@ -446,4 +459,3 @@ class PaymentIntents {
     return map;
   }
 }
-

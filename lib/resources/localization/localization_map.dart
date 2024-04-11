@@ -162,6 +162,7 @@ class LocalizationMap {
     "accepted": "Accepted",
     "ch_pic": "Change Media on Home Page",
     "up_save": "Choose and Upload Image",
+    "crypto_bookings": "Approve Crypto Bookings"
   };
 
   static String getTranslatedValues(String key) {

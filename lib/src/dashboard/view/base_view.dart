@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:yacht_master_admin/src/auth/vm/auth_vm.dart';
+import 'package:yacht_master_admin/src/dashboard/pages/approvals/view/approvals_view.dart';
 import 'package:yacht_master_admin/src/dashboard/pages/bookings/view_model/bookings_vm.dart';
 import 'package:yacht_master_admin/src/dashboard/pages/chat/view/chat_view.dart';
 import 'package:yacht_master_admin/src/dashboard/pages/chat/vm/chat_vm.dart';
@@ -121,6 +122,7 @@ class _DashboardViewState extends State<DashboardView> {
                       SettingsView(),
                       InviteView(),
                       PictureView(),
+                      ApprovalsView(),
                     ],
                   ),
                 ),
@@ -168,6 +170,7 @@ class _DashboardViewState extends State<DashboardView> {
                       SettingsView(),
                       InviteView(),
                       PictureView(),
+                      ApprovalsView(),
                     ],
                   ),
                 ),

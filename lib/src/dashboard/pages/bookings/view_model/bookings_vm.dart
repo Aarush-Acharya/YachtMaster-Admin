@@ -7,21 +7,23 @@ import '../../../../../constants/fb_collections.dart';
 import '../model/bookings_model.dart';
 import '../model/taxes_model.dart';
 
-class BookingsVm extends ChangeNotifier{
-  List<BookingsModel> allBookings=[];
+class BookingsVm extends ChangeNotifier {
+  List<BookingsModel> allBookings = [];
   int serviceFee = 0;
   int taxes = 0;
   int tips = 0;
   int selectedIndex = 0;
   double referralAmount = 0.0;
+  TextEditingController searchController = TextEditingController();
 
   Future<void> fetchAllBookings() async {
-    allBookings=[];
+    allBookings = [];
     try {
-      QuerySnapshot ref =await FBCollections.bookings.get();
+      QuerySnapshot ref = await FBCollections.bookings.get();
 
-      if (ref!=null && ref.docs.isNotEmpty) {
-        allBookings = ref.docs.map((e) => BookingsModel.fromJson(e.data())).toList();
+      if (ref != null && ref.docs.isNotEmpty) {
+        allBookings =
+            ref.docs.map((e) => BookingsModel.fromJson(e.data())).toList();
         notifyListeners();
       }
       log("___bookings:${allBookings.length}");
@@ -39,7 +41,6 @@ class BookingsVm extends ChangeNotifier{
       TaxesModel? taxesModel;
       QuerySnapshot snapshot = await FBCollections.taxes.get();
       if (snapshot.docs.isNotEmpty) {
-
         taxesModel = TaxesModel.fromJson(snapshot.docs.first.data());
         serviceFee = taxesModel.serviceFee ?? 0;
         taxes = taxesModel.taxes ?? 0;
@@ -53,7 +54,7 @@ class BookingsVm extends ChangeNotifier{
     }
   }
 
-  update(){
+  update() {
     notifyListeners();
   }
 }

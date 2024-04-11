@@ -102,6 +102,12 @@ class _SideBarWidgetState extends State<SideBarWidget> {
                         title: 'bookings',
                         baseVm: baseVm,
                       ),
+                      sideBarContainer(
+                        indexCount: 16,
+                        image: R.images.terms,
+                        title: 'crypto_bookings',
+                        baseVm: baseVm,
+                      ),
                       if (!baseVm.isMini)
                         titleText(
                           title: "payment_management",
@@ -269,6 +275,12 @@ class _SideBarWidgetState extends State<SideBarWidget> {
                         indexCount: 3,
                         image: R.images.maleUsers,
                         title: 'bookings',
+                        baseVm: baseVm,
+                      ),
+                      sideBarContainer(
+                        indexCount: 16,
+                        image: R.images.terms,
+                        title: 'crypto_bookings',
                         baseVm: baseVm,
                       ),
                       sideBarContainer(
