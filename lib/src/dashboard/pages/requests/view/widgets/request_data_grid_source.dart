@@ -364,6 +364,7 @@ class RequestDataGridSource extends DataGridSource {
         }
       });
       await FBCollections.users.doc(id).update({"request_status": status});
+      await FBCollections.users.doc(id).update({"invite_status": status});
       await NotificationService.sendNotification(
           fcmToken: userFCM, title: "Become a Host", body: desc);
       await sendNotification(id, desc);
